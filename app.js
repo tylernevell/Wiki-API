@@ -73,19 +73,16 @@ app.route("/articles/:articleTitle")
     })
 
     .put((req, res) => {
-        // only works with deprecated update and not updateOne for some reason. Will figure out later
-        Article.update(
+        Article.replaceOne(
             {title: req.params.articleTitle},
-            {title: req.body.title, content: req.body.content},
-            {overwrite: true},
+            req.body,
             (err) => {
                 if (!err) {
                     res.send("Successfully updated article.");
                 } else {
                     res.send(err);
                 }
-            }
-            );
+            });
     })
 
     .patch();
